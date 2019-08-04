@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{ab3f8bb6-2b4d-4633-895d-8fd3f1df00fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="player">
+      <UniqueIdentifier>{5766e3ac-f80f-4417-aed4-306465e8e6a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cjson">
+      <UniqueIdentifier>{921cbca5-1af7-4640-9fe2-26f98c407e6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -20,6 +29,39 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MPVController.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="MPVDataDefine.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="MPVTrack.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaybackInfo.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="WinPlayer.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCore.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerForCS.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="cJSON.h">
+      <Filter>cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="CJsonObject.hpp">
+      <Filter>cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="CJsonHelper.h">
+      <Filter>cjson</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +73,33 @@
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MPVController.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="MPVDataDefine.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="MPVTrack.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="WinPlayer.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCore.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerForCS.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="cJSON.c">
+      <Filter>cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="CJsonObject.cpp">
+      <Filter>cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="CJsonHelper.cpp">
+      <Filter>cjson</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
