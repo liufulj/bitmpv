@@ -24,6 +24,8 @@ namespace bitplayer
 
         private bool isOpenedFirst = false;
 
+        private bitplayer.PlaybackInfo info;
+
         public Main()
         {
             InitializeComponent();
@@ -33,8 +35,7 @@ namespace bitplayer
             this.trackBarSound.Maximum = 100;
             this.trackBarSound.Minimum = 0;
             this.trackBarSound.Value = 0;
-            //this.Location = new Point(960, 480);
-            //this.Show();
+      
         }
 
         private void open_ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -56,11 +57,27 @@ namespace bitplayer
                     isOpenedFirst = true;
                     bitplayer.Player.OpenMovieDefault(session, openFileDlg.FileName);
                     isMute = true;
-                    bitplayer.Player.ToggleMute(session, isMute);
+
+                    changePlayOrPause();
+                    changeMute(isMute);
+
 
                 }
             }
 
+        }
+
+        private void changeMute(bool muteFlag)
+        {
+            if (muteFlag)
+            {
+                soundVol.BackgroundImage = Resources.mute;
+            }
+            else
+            {
+                soundVol.BackgroundImage = Resources.sound;
+            }
+            bitplayer.Player.ToggleMute(session, muteFlag);
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -71,7 +88,8 @@ namespace bitplayer
                 bitplayer.Player.SetWindowId(session, (System.IntPtr)this.video.Handle.ToInt64(), false);
                 this.trackBarSound.Value = (int)bitplayer.Player.GetVolume(session);
                 Console.WriteLine("" + bitplayer.Player.GetVolume(session));
-
+                changePlayOrPause();
+                changeMute(isMute);
             }
         }
 
@@ -81,7 +99,22 @@ namespace bitplayer
             {
 
                 bitplayer.Player.TogglePause(session);
+                changePlayOrPause();
+            }
+        }
 
+        private void changePlayOrPause()
+        {
+            if (session != null)
+            {
+                if (bitplayer.Player.IsPlaying(session))
+                {
+                    playOrPause.BackgroundImage = Resources.pause;
+                }
+                else
+                {
+                    playOrPause.BackgroundImage = Resources.play;
+                }
             }
         }
 
@@ -90,7 +123,7 @@ namespace bitplayer
             if (session != null)
             {
                 isMute = !isMute;
-                bitplayer.Player.ToggleMute(session,isMute);
+                changeMute(isMute);
 
             }
         }
@@ -104,14 +137,8 @@ namespace bitplayer
                     if (isOpenedFirst)
                     {
                         isOpenedFirst = false;
-                        bitplayer.Player.UpdatePlaybackInfo(session);
-                        byte[] s = new byte[1024];
-                        int t = bitplayer.Player.GetPlaybackInfo(session ,ref s[0]);//用字节数组接收动态库传过来的字符串
-                        string strGet = System.Text.Encoding.Default.GetString(s, 0, s.Length); //将字节数组转换为字符串
-                        Console.WriteLine(strGet);
-                      
-                        //string info = Marshal.PtrToStringAnsi(bitplayer.Player.GetPlaybackInfo(session));
-                        //Console.WriteLine(info);
+                        UpdateVideoInfo();
+
                     }
 
 
@@ -138,6 +165,74 @@ namespace bitplayer
             }
         }
 
+        private void UpdateVideoInfo()
+        {
+            info = bitplayer.Player.GetPlaybackInfo(session);
+            UpdateContextMenu();
+        }
+
+        private void UpdateContextMenu()
+        {
+            videoContextMenuStrip.Items.Clear();
+
+            if (info.audioTracks != null && info.audioTracks.Count > 0)
+            {
+                ToolStripMenuItem subItem;
+                subItem = AddContextMenu("音频", videoContextMenuStrip.Items, null);
+                subItem.Name = "audio";
+                ToolStripMenuItem nilItem = AddContextMenu("无", subItem.DropDownItems, new EventHandler(OnMenuClick),"audio0");
+                bool isNull = true;
+                foreach (MPVTrack track in info.audioTracks)
+                {
+
+                    ToolStripMenuItem item =AddContextMenu("轨道" + track.id, subItem.DropDownItems, new EventHandler(OnMenuClick),"audio"+track.id);
+                    if (info.aid == track.id)
+                    {
+                        item.Checked = true;
+                        isNull = false;
+                    }
+                    else
+                    {
+                        item.Checked = false;
+                    }
+                    
+                }
+                if (isNull)
+                {
+                    nilItem.Checked = true;
+                }
+            }
+
+            if (info.subTracks != null && info.subTracks.Count > 0)
+            {
+                ToolStripMenuItem subItem;
+                subItem = AddContextMenu("字幕", videoContextMenuStrip.Items, null);
+                subItem.Name = "sub";
+                ToolStripMenuItem nilItem = AddContextMenu("无", subItem.DropDownItems, new EventHandler(OnMenuClick),"sub0");
+                bool isNull = true;
+                foreach (MPVTrack track in info.subTracks)
+                {
+                    ToolStripMenuItem item = AddContextMenu("字幕" + track.id, subItem.DropDownItems, new EventHandler(OnMenuClick),"sub"+track.id);
+                    if (info.sid == track.id)
+                    {
+                        item.Checked = true;
+                        isNull = false;
+                    }
+                    else
+                    {
+                        item.Checked = false;
+                    }
+
+                }
+                if (isNull)
+                {
+                    nilItem.Checked = true;
+                }
+            
+            
+
+            }
+        }
 
         private void ProgressBar_MouseClick(object sender, MouseEventArgs e)
         {
@@ -159,5 +254,62 @@ namespace bitplayer
                 bitplayer.Player.SetVolume(session, postion);
             }
         }
+
+        private void OnMenuClick(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            try
+            {
+                string tag = item.Tag.ToString();
+                if (tag.StartsWith("audio"))
+                {
+                    int id = Int32.Parse(tag.Replace("audio", ""));
+                    bitplayer.Player.SetTrack(session,(int) MPVTrack.TrackType.AUDIO, id);
+                }
+                else if (tag.StartsWith("sub"))
+                {
+                    int id = Int32.Parse(tag.Replace("sub", ""));
+                    bitplayer.Player.SetTrack(session, (int)MPVTrack.TrackType.SUB, id);
+                }
+            }
+            catch
+            {
+
+            }
+
+            UpdateVideoInfo();
+        
+            Console.WriteLine(item.Tag);
+        }
+
+        private ToolStripMenuItem AddContextMenu(string text, ToolStripItemCollection cms, EventHandler callback, string tag = "")
+        {
+            if (text == "-")
+            {
+                ToolStripSeparator tsp = new ToolStripSeparator();
+                cms.Add(tsp);
+                return null;
+            }
+            else if (!string.IsNullOrEmpty(text))
+            {
+                ToolStripMenuItem tsmi = new ToolStripMenuItem(text);
+                if (tag == "")
+                {
+                    tsmi.Tag = text + "TAG";
+                }
+                else
+                {
+                    tsmi.Tag = tag;
+                }
+                
+                if (callback != null) tsmi.Click += callback;
+                cms.Add(tsmi);
+
+                return tsmi;
+            }
+
+            return null;
+        }
+
     }
 }

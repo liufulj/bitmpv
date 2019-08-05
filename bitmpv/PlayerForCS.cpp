@@ -136,13 +136,23 @@ EXPORT_API  int __stdcall GetPlaybackInfo(SESSION* session, char* s)
 	}
 	LeoPlayer::PlaybackInfo info = session->player->GetPlaybackInfo();
 	neb::CJsonObject oJson = CJsonHelper::GetJsonFromPlaybackInfo(info);
-	std::string str = oJson.ToFormattedString();
+	std::string str = oJson.ToString();
 	const char* c = str.c_str();
 	strcpy(s,c);
+	return str.size();
 	//const int len = str.length()+1;
 	
 	//char* c;
 	//c = new char[len];
 	//strcpy(c, str.c_str());
 	//return str.c_str();
+}
+
+EXPORT_API void SetTrack(SESSION* session, int type, int index)
+{
+	if (NULL == session || session->player == NULL) {
+		return;
+	}
+
+	return session->player->SetTrack(LeoPlayer::MPVTrack::TrackType (type), index);
 }

@@ -117,6 +117,8 @@ namespace LeoPlayer {
 
 		virtual PlaybackInfo GetPlaybackInfo() = 0;
 
+		virtual void SetTrack(MPVTrack::TrackType type, int index)=0;
+
 		virtual void ChangeNextAudio() = 0;
 
 		virtual void ChangeNextSub() = 0;

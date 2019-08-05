@@ -27,10 +27,13 @@ namespace LeoPlayer {
 	}
 	void PlayerCore::GetSelectedTracks()
 	{
+		this->info.volume = this->mpv.GetDouble(MPVOption::Audio::volume);
 		this->info.aid = this->mpv.GetInt(MPVOption::TrackSelection::aid);
 		this->info.vid = this->mpv.GetInt(MPVOption::TrackSelection::vid);
 		this->info.sid = this->mpv.GetInt(MPVOption::TrackSelection::sid);
 		this->info.secondSid = this->mpv.GetInt(MPVOption::Subtitles::secondarySid);
+		info.width = mpv.GetInt(MPVProperty::width);
+		info.height = mpv.GetInt(MPVProperty::height);
 	}
 	void PlayerCore::GetTrackInfo()
 	{
@@ -38,6 +41,7 @@ namespace LeoPlayer {
 		info.videoTracks.clear();
 		info.subTracks.clear();
 		int trackCount = mpv.GetInt(MPVProperty::trackListCount);
+		info.duration = mpv.GetDouble(MPVProperty::duration);
 		for(int index =0;  index < trackCount;index++)
 		{
 			// Get info for each track
@@ -81,6 +85,7 @@ namespace LeoPlayer {
 			}
 		}
 
+	
 	}
 
 	void PlayerCore::ChangeNextAudio()
@@ -119,14 +124,14 @@ namespace LeoPlayer {
 
 	double PlayerCore::GetCurrentPosition()
 	{
-		info.timePos = mpv.GetDouble(MPVProperty::timePos);
-		return info.timePos;
+
+		return  mpv.GetDouble(MPVProperty::timePos);
 	}
 
 	double PlayerCore::GetDuration()
 	{
-		info.duration = mpv.GetDouble(MPVProperty::duration);
-		return info.duration;
+		
+		return mpv.GetDouble(MPVProperty::duration);;
 	}
 
 	void PlayerCore::SetLoop(bool loop)

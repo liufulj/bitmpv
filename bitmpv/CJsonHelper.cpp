@@ -10,19 +10,36 @@ neb::CJsonObject CJsonHelper::GetJsonFromPlaybackInfo(LeoPlayer::PlaybackInfo in
 	oJson.Add("sid", info.sid);
 	oJson.Add("secondSid", info.secondSid);
 	oJson.Add("rotation", info.secondSid);
+	oJson.Add("width", info.width);
+	oJson.Add("height", info.height);
+	oJson.Add("duration", info.duration);
 	std::list<LeoPlayer::MPVTrack>::iterator it;
-	for (it = info.audioTracks.begin(); it != info.audioTracks.end(); it++) {
-		neb::CJsonObject item = GetJsonFromMPVTrack(*it);
-		oJson.Add("audioTracks", item);
+	if (info.audioTracks.size() > 0) {
+		neb::CJsonObject audioItems;
+		for (it = info.audioTracks.begin(); it != info.audioTracks.end(); it++) {
+			neb::CJsonObject item = GetJsonFromMPVTrack(*it);
+			audioItems.Add(item);
+		}
+		oJson.Add("audioTracks", audioItems);
 	}
-	for (it = info.videoTracks.begin(); it != info.videoTracks.end(); it++) {
-		neb::CJsonObject item = GetJsonFromMPVTrack(*it);
-		oJson.Add("audioTracks", item);
+
+	if (info.videoTracks.size() > 0) {
+		neb::CJsonObject videoItems;
+		for (it = info.videoTracks.begin(); it != info.videoTracks.end(); it++) {
+			neb::CJsonObject item = GetJsonFromMPVTrack(*it);
+			videoItems.Add(item);
+		}
+		oJson.Add("videoTracks", videoItems);
 	}
-	for (it = info.subTracks.begin(); it != info.subTracks.end(); it++) {
-		neb::CJsonObject item = GetJsonFromMPVTrack(*it);
-		oJson.Add("subTracks", item);
+	if (info.subTracks.size() > 0) {
+		neb::CJsonObject subItems;
+		for (it = info.subTracks.begin(); it != info.subTracks.end(); it++) {
+			neb::CJsonObject item = GetJsonFromMPVTrack(*it);
+			subItems.Add(item);
+		}
+		oJson.Add("subTracks", subItems);
 	}
+
 	return oJson;
 }
 

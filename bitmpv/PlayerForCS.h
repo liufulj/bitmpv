@@ -39,5 +39,6 @@ extern "C"
 	EXPORT_API void SetVolume(SESSION* session, double volume);
 	EXPORT_API double GetVolume(SESSION* session);
 	EXPORT_API int __stdcall GetPlaybackInfo(SESSION* session,char* str);
+	EXPORT_API  void SetTrack(SESSION* session,int type, int index);
 
 }

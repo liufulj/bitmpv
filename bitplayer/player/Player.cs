@@ -25,6 +25,38 @@ namespace bitplayer
             return OpenMovie(session, data);
         }
 
+        public static PlaybackInfo GetPlaybackInfo(IntPtr session)
+        {
+            bitplayer.Player.UpdatePlaybackInfo(session);
+            byte[] s = new byte[4 * 1024];
+            int t = bitplayer.Player.GetPlaybackInfo(session, ref s[0]);//用字节数组接收动态库传过来的字符串
+            string strGet = System.Text.Encoding.Default.GetString(s, 0, t); //将字节数组转换为字符串
+            try
+            {
+                PlaybackInfo config = SimpleJson.SimpleJson.DeserializeObject<PlaybackInfo>(strGet, new JsonSerializerStrategy());
+              
+                return config;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return new PlaybackInfo();
+        }
+
+        private class JsonSerializerStrategy : SimpleJson.PocoJsonSerializerStrategy
+        {
+            // convert string to int
+            public override object DeserializeObject(object value, Type type)
+            {
+                if (type == typeof(Int32) && value.GetType() == typeof(string))
+                {
+                    return Int32.Parse(value.ToString());
+                }
+                return base.DeserializeObject(value, type);
+            }
+        }
+
         [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr CreateSession();
         [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
@@ -69,6 +101,10 @@ namespace bitplayer
 
         [DllImport(dllname, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern int GetPlaybackInfo(IntPtr session,ref byte str);
+
+
+        [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SetTrack(IntPtr session,int type,int index);
 
         //[DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
         //public static extern void StartEvent(IntPtr session);

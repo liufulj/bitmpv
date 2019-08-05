@@ -116,6 +116,10 @@ namespace LeoPlayer {
 	{
 		return this->m_playerCore.GetPlaybackInfo();
 	}
+	void WinPlayer::SetTrack(MPVTrack::TrackType type, int index)
+	{
+		this->m_playerCore.SetTrack(type, index);
+	}
 	void WinPlayer::ChangeNextAudio()
 	{
 		this->m_playerCore.ChangeNextAudio();

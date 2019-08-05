@@ -11,8 +11,9 @@ namespace LeoPlayer {
 		int sid = 0;
 		int secondSid = 0;
 		int rotation = 0;
-		double timePos = 0;
 		double duration = 0;
+		int width;
+		int height;
 		std::list<MPVTrack> audioTracks;
 		std::list<MPVTrack> videoTracks;
 		std::list<MPVTrack> subTracks;
