@@ -79,7 +79,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)..\3rdParty\mpv\include;$(SolutionDir)..\3rdParty\sdl2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(SolutionDir)..\3rdParty\mpv;$(SolutionDir)..\3rdParty\sdl2\lib\$(Platform);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
-    <OutDir>$(SolutionDir)..\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>E:\bitleo\player\UnityBitmpv\bin\UnityBitmpv_Data\Plugins\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -160,15 +160,31 @@
     <ClInclude Include="cJSON.h" />
     <ClInclude Include="CJsonHelper.h" />
     <ClInclude Include="CJsonObject.hpp" />
+    <ClInclude Include="D3DInterface.h" />
+    <ClInclude Include="glcorearb.h" />
     <ClInclude Include="MPVController.h" />
     <ClInclude Include="MPVDataDefine.h" />
     <ClInclude Include="MPVTrack.h" />
+    <ClInclude Include="NativeRenderingPlugin\gl3w\gl3w.h" />
+    <ClInclude Include="NativeRenderingPlugin\gl3w\glcorearb.h" />
+    <ClInclude Include="NativeRenderingPlugin\PlatformBase.h" />
+    <ClInclude Include="NativeRenderingPlugin\RenderAPI.h" />
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphics.h" />
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphicsD3D11.h" />
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphicsD3D12.h" />
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphicsD3D9.h" />
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphicsMetal.h" />
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphicsVulkan.h" />
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityInterface.h" />
     <ClInclude Include="PlaybackInfo.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCore.h" />
     <ClInclude Include="PlayerForCS.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="wglext.h" />
+    <ClInclude Include="WglUtils.h" />
+    <ClInclude Include="WindowClient.h" />
     <ClInclude Include="WinPlayer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -180,10 +196,29 @@
     <ClCompile Include="CJsonObject.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="D3DInterface.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="MPVController.cpp" />
     <ClCompile Include="MPVDataDefine.cpp" />
     <ClCompile Include="MPVTrack.cpp" />
+    <ClCompile Include="NativeRenderingPlugin\gl3w\gl3w.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="NativeRenderingPlugin\RenderAPI.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="NativeRenderingPlugin\RenderAPI_D3D11.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="NativeRenderingPlugin\RenderAPI_D3D12.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="NativeRenderingPlugin\RenderAPI_OpenGLCoreES.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="NativeRenderingPlugin\RenderAPI_Vulkan.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="PlayerCore.cpp" />
     <ClCompile Include="PlayerForCS.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -192,6 +227,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="WglUtils.cpp" />
+    <ClCompile Include="WindowClient.cpp" />
     <ClCompile Include="WinPlayer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

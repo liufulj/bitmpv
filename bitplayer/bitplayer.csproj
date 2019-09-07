@@ -37,6 +37,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\CSkin.dll</HintPath>
     </Reference>
+    <Reference Include="LitJSON">
+      <HintPath>..\..\UnityBitmpv\Assets\Plugins\LitJSON.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

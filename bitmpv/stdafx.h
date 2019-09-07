@@ -13,6 +13,8 @@
 #include "MPVDataDefine.h"
 #include "PlaybackInfo.h"
 
+#include "NativeRenderingPlugin/gl3w/glcorearb.h"
+#include "wglext.h"
 
 
 // 在此处引用程序需要的其他标头

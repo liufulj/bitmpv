@@ -32,16 +32,16 @@ namespace bitplayer
 
         public int id;
         public TrackType type;
-        public bool isDefault;
-        public bool isForced;
-        public bool isSelected;
-        public bool isExternal;
+        public int isDefault;
+        public int isForced;
+        public int isSelected;
+        public int isExternal;
         public int srcId;
         public string title;
         public string lang;
         public string codec;
         public string externalFilename;
-        public bool isAlbumart;
+        public int isAlbumart;
         public string decoderDesc;
         public int demuxW;
         public int demuxH;

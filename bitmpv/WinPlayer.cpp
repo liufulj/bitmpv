@@ -27,9 +27,12 @@ namespace LeoPlayer {
 	}
 	void WinPlayer::Reset()
 	{
+		
 	}
 	void WinPlayer::ReleasePlayer()
 	{
+	
+	
 	}
 	void WinPlayer::SetDataSource(const char * url)
 	{
@@ -199,6 +202,9 @@ namespace LeoPlayer {
 
 	void WinPlayer::InitGL()
 	{
+		if (mpv_gl != NULL) {
+			return;
+		}
 		mpv_opengl_init_params paramsInit;
 		paramsInit.extra_exts = NULL;
 		paramsInit.get_proc_address_ctx = NULL;

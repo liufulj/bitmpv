@@ -27,7 +27,8 @@ extern "C"
 {
 	EXPORT_API SESSION* CreateSession();
 	EXPORT_API void DestroySession(SESSION* session);
-	EXPORT_API void SetWindowId(SESSION* session, void*  windowId);
+	EXPORT_API void InitExtendDevice(SESSION* session);
+	EXPORT_API void SetWindowId(SESSION* session, void*  windowId,bool isTexture);
 	EXPORT_API int OpenMovie(SESSION* session, const char* path);
 	EXPORT_API void UpdatePlaybackInfo(SESSION*session);
 	EXPORT_API void TogglePause(SESSION* session);
@@ -40,5 +41,8 @@ extern "C"
 	EXPORT_API double GetVolume(SESSION* session);
 	EXPORT_API int __stdcall GetPlaybackInfo(SESSION* session,char* str);
 	EXPORT_API  void SetTrack(SESSION* session,int type, int index);
+	EXPORT_API int WaitForEvent(SESSION* session);
+	EXPORT_API void UpdateRender(SESSION* session);
+	EXPORT_API void Stop(SESSION* session);
 
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LitJson;
+using System;
 using System.Runtime.InteropServices;
 
 namespace bitplayer
@@ -33,8 +34,8 @@ namespace bitplayer
             string strGet = System.Text.Encoding.Default.GetString(s, 0, t); //将字节数组转换为字符串
             try
             {
-                PlaybackInfo config = SimpleJson.SimpleJson.DeserializeObject<PlaybackInfo>(strGet, new JsonSerializerStrategy());
-              
+                PlaybackInfo config = JsonMapper.ToObject<PlaybackInfo>(strGet);// SimpleJson.SimpleJson.DeserializeObject<PlaybackInfo>(strGet, new JsonSerializerStrategy());
+
                 return config;
             }
             catch(Exception e)
@@ -44,18 +45,18 @@ namespace bitplayer
             return new PlaybackInfo();
         }
 
-        private class JsonSerializerStrategy : SimpleJson.PocoJsonSerializerStrategy
-        {
-            // convert string to int
-            public override object DeserializeObject(object value, Type type)
-            {
-                if (type == typeof(Int32) && value.GetType() == typeof(string))
-                {
-                    return Int32.Parse(value.ToString());
-                }
-                return base.DeserializeObject(value, type);
-            }
-        }
+        //private class JsonSerializerStrategy : SimpleJson.PocoJsonSerializerStrategy
+        //{
+        //    // convert string to int
+        //    public override object DeserializeObject(object value, Type type)
+        //    {
+        //        if (type == typeof(Int32) && value.GetType() == typeof(string))
+        //        {
+        //            return Int32.Parse(value.ToString());
+        //        }
+        //        return base.DeserializeObject(value, type);
+        //    }
+        //}
 
         [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr CreateSession();
@@ -105,18 +106,6 @@ namespace bitplayer
 
         [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
         public static extern void SetTrack(IntPtr session,int type,int index);
-
-        //[DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
-        //public static extern void StartEvent(IntPtr session);
-
-        //[DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
-        //public static extern void StopEvent(IntPtr session);
-
-        //[DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
-        //public static extern void UpdateRender(IntPtr session);
-        //[DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
-        //public static extern void DoProcess(IntPtr session);
-
 
 
 

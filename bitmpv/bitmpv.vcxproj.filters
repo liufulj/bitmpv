@@ -22,6 +22,12 @@
     <Filter Include="cjson">
       <UniqueIdentifier>{921cbca5-1af7-4640-9fe2-26f98c407e6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Unity">
+      <UniqueIdentifier>{ac1a6196-e8e4-4915-97e5-f2c233e62427}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="d3d11">
+      <UniqueIdentifier>{d72d9984-5d11-466d-b97f-a14a984bdbca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -63,6 +69,54 @@
     <ClInclude Include="CJsonHelper.h">
       <Filter>cjson</Filter>
     </ClInclude>
+    <ClInclude Include="NativeRenderingPlugin\gl3w\gl3w.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeRenderingPlugin\gl3w\glcorearb.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphics.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphicsD3D9.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphicsD3D11.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphicsD3D12.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphicsMetal.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityGraphicsVulkan.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeRenderingPlugin\Unity\IUnityInterface.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeRenderingPlugin\PlatformBase.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeRenderingPlugin\RenderAPI.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DInterface.h">
+      <Filter>d3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="glcorearb.h">
+      <Filter>d3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="wglext.h">
+      <Filter>d3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowClient.h">
+      <Filter>d3d11</Filter>
+    </ClInclude>
+    <ClInclude Include="WglUtils.h">
+      <Filter>d3d11</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -100,6 +154,33 @@
     </ClCompile>
     <ClCompile Include="CJsonHelper.cpp">
       <Filter>cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="NativeRenderingPlugin\gl3w\gl3w.c">
+      <Filter>Unity</Filter>
+    </ClCompile>
+    <ClCompile Include="NativeRenderingPlugin\RenderAPI.cpp">
+      <Filter>Unity</Filter>
+    </ClCompile>
+    <ClCompile Include="NativeRenderingPlugin\RenderAPI_D3D11.cpp">
+      <Filter>Unity</Filter>
+    </ClCompile>
+    <ClCompile Include="NativeRenderingPlugin\RenderAPI_D3D12.cpp">
+      <Filter>Unity</Filter>
+    </ClCompile>
+    <ClCompile Include="NativeRenderingPlugin\RenderAPI_OpenGLCoreES.cpp">
+      <Filter>Unity</Filter>
+    </ClCompile>
+    <ClCompile Include="NativeRenderingPlugin\RenderAPI_Vulkan.cpp">
+      <Filter>Unity</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DInterface.cpp">
+      <Filter>d3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowClient.cpp">
+      <Filter>d3d11</Filter>
+    </ClCompile>
+    <ClCompile Include="WglUtils.cpp">
+      <Filter>d3d11</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
