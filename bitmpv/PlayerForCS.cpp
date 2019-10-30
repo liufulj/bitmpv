@@ -86,7 +86,6 @@ EXPORT_API SESSION* CreateSession()
 	SESSION* session = (SESSION*)calloc(sizeof(SESSION), 1);
 	if (NULL == session)return NULL;
 	session->player = new LeoPlayer::WinPlayer();
-	session->player->Reset();
 	session->sharedTextureMutex_ = new std::mutex();
 	g_Session = session;
 	gl3wInit();
@@ -102,6 +101,10 @@ EXPORT_API void DestroySession(SESSION* session)
 }
 EXPORT_API void InitExtendDevice(SESSION* session)
 {
+	if (NULL == session || session->player == NULL) {
+		return;
+	}
+	session->player->InitGL();
 	g_renderEnv.envType = 0;
 	
 	if (g_renderEnv.envType == 0 || g_renderEnv.envType == 1) {
@@ -119,9 +122,8 @@ EXPORT_API void InitExtendDevice(SESSION* session)
 			g_renderEnv.wglUtils->InitWithWinIdAndDevice(g_renderEnv.windowWgl->GetWindowId(), g_renderEnv.d3dInterface->GetDevice());
 
 		}
-		
-
 	}
+	
 
 }
 EXPORT_API void SetWindowId(SESSION* session, void*  windowId, bool isTexture)
@@ -129,12 +131,20 @@ EXPORT_API void SetWindowId(SESSION* session, void*  windowId, bool isTexture)
 	if (NULL == session || session->player == NULL) {
 		return;
 	}
+	if (!g_isUnity) {
 
-	session->player->SetWindowId((int64_t)windowId,isTexture);
+		session->player->SetWindowId((int64_t)windowId,isTexture);
+	}
+	else {
+
+    if (session->gl) {
+		session->gl = false;
+
+
+	}
 
 	if (g_renderEnv.envType == 0 || g_renderEnv.envType == 1) 
 	{
-		session->gl = false;
 		g_renderEnv.unityTexture = (ID3D11Texture2D*)windowId;
 		HANDLE resource;
 		D3D11_TEXTURE2D_DESC textureInfo;
@@ -174,6 +184,10 @@ EXPORT_API void SetWindowId(SESSION* session, void*  windowId, bool isTexture)
 		session->gl = true;
 	}
 
+
+
+	}
+
 	
 	
 
@@ -182,6 +196,7 @@ EXPORT_API int OpenMovie(SESSION* session, const char* path) {
 	if (NULL == session || session->player == NULL) {
 		return -1;
 	}
+	session->player->Reset();
 	session->player->SetDataSource(path);
 	session->player->Start();
 	return 0;
@@ -309,22 +324,18 @@ EXPORT_API int WaitForEvent(SESSION* session)
 		}
 		//Happens when at least 1 new event is in the mpv event queue.
 		if (event.type == session->player->GetMpvEvent()) {
-			// Handle all remaining mpv events.
-			while (1) {
-				mpv_event* mp_event = mpv_wait_event((mpv_handle*)session->player->GetMpvHandle(), 0);
-				if (mp_event->event_id == MPV_EVENT_NONE)
-					break;
-				printf("event: %s\n", mpv_event_name(mp_event->event_id));
-				if (mp_event->event_id == MPV_EVENT_END_FILE) {
-					return -3;
-				}
-				else if (mp_event->event_id == MPV_EVENT_START_FILE) {
-					return 333;
-				}
-			}
+			return 333;
 		}
 	}
+	return 0;
+}
 
+EXPORT_API int WaitMpvEvent(SESSION* session)
+{
+	// Handle all remaining mpv events.
+	mpv_event* mp_event = mpv_wait_event((mpv_handle*)session->player->GetMpvHandle(), 0);
+	return mp_event->event_id;
+			
 }
 
 
@@ -476,6 +487,7 @@ static void UNITY_INTERFACE_API OnRenderEvent(int eventID)
 		return;
 
 	if (eventID == 666) {
+
 		if (g_Session != NULL && g_Session->shouldRender) {
 			g_Session->shouldRender = false;
 			if (g_renderEnv.envType == 0) {

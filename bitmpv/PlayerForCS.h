@@ -42,6 +42,7 @@ extern "C"
 	EXPORT_API int __stdcall GetPlaybackInfo(SESSION* session,char* str);
 	EXPORT_API  void SetTrack(SESSION* session,int type, int index);
 	EXPORT_API int WaitForEvent(SESSION* session);
+	EXPORT_API int WaitMpvEvent(SESSION* session);
 	EXPORT_API void UpdateRender(SESSION* session);
 	EXPORT_API void Stop(SESSION* session);
 

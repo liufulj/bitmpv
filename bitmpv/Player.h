@@ -130,6 +130,8 @@ namespace LeoPlayer {
 		virtual unsigned int GetRedrawEvent() =0;
 
 		virtual unsigned int GetMpvEvent()  =0;
+
+		virtual void InitGL() = 0;
 		
 
 	protected:

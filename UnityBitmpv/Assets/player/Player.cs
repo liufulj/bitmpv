@@ -7,9 +7,7 @@ namespace bitplayer
     public class Player
     {
 
-        public const int EVENT_REDRAW = 1;
-
-        public const int EVENT_MPV = 2;
+      
 
         public const string dllname = "bitmpv";
         /// <summary>
@@ -57,6 +55,9 @@ namespace bitplayer
         private static extern int OpenMovie(IntPtr session, string path);
 
         [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void Start(IntPtr session);
+
+        [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
         public static extern void Stop(IntPtr session);
 
         [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
@@ -96,7 +97,7 @@ namespace bitplayer
         public static extern void UpdatePlaybackInfo(IntPtr session);
 
         [DllImport(dllname, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int GetPlaybackInfo(IntPtr session,ref byte str);
+        private static extern int GetPlaybackInfo(IntPtr session,ref byte str);
 
 
         [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
@@ -104,6 +105,10 @@ namespace bitplayer
 
         [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
         public static extern int WaitForEvent(IntPtr session);
+
+        [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int WaitMpvEvent(IntPtr session);
+
 
         [DllImport(dllname, CallingConvention = CallingConvention.Cdecl)]
         public static extern void UpdateRender(IntPtr session);

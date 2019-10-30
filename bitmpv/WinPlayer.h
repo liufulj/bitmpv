@@ -126,9 +126,9 @@ namespace LeoPlayer {
 
 		virtual unsigned int GetMpvEvent()  override;
 
+		virtual void InitGL() override;
 	private:
 		void InitSDL();
-		void InitGL();
 		bool mDraw;
 		mpv_render_context *mpv_gl;
 		static unsigned int  wakeup_on_mpv_redraw;

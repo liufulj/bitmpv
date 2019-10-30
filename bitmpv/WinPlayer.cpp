@@ -27,7 +27,7 @@ namespace LeoPlayer {
 	}
 	void WinPlayer::Reset()
 	{
-		
+		mpv_set_wakeup_callback(m_playerCore.GetMPVHandle(), on_mpv_events, NULL);
 	}
 	void WinPlayer::ReleasePlayer()
 	{
@@ -40,6 +40,7 @@ namespace LeoPlayer {
 	}
 	void WinPlayer::Start()
 	{
+		
 		this->m_playerCore.Open(m_path);
 		isPause = false;
 	}
@@ -105,9 +106,7 @@ namespace LeoPlayer {
 
 			this->m_playerCore.SetWindowId(data);
 		}
-		else {
-			this->InitGL();
-		}
+		
 	}
 
 	void WinPlayer::UpdatePlaybackInfo()
@@ -197,7 +196,7 @@ namespace LeoPlayer {
 		wakeup_on_mpv_events = SDL_RegisterEvents(1);
     	if (wakeup_on_mpv_redraw == (Uint32)-1 || wakeup_on_mpv_events == (Uint32)-1)
 			printf("could not register events");
-		mpv_set_wakeup_callback(m_playerCore.GetMPVHandle(), on_mpv_events, NULL);
+		
 	}
 
 	void WinPlayer::InitGL()

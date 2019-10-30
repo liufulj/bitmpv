@@ -79,7 +79,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)..\3rdParty\mpv\include;$(SolutionDir)..\3rdParty\sdl2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <LibraryPath>$(SolutionDir)..\3rdParty\mpv;$(SolutionDir)..\3rdParty\sdl2\lib\$(Platform);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
-    <OutDir>E:\bitleo\player\UnityBitmpv\bin\UnityBitmpv_Data\Plugins\</OutDir>
+    <OutDir>..\UnityBitmpv\bin\UnityBitmpv_Data\Plugins</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
